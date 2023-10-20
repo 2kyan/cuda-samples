@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{8818906B-930A-4F41-8D88-3B939F7E38B3}</ProjectGuid>
     <RootNamespace>simpleVulkanMMAP_vs2019</RootNamespace>
     <ProjectName>simpleVulkanMMAP</ProjectName>
     <CudaToolkitCustomDir />
@@ -99,12 +99,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
     <Link>
-      
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
-      
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

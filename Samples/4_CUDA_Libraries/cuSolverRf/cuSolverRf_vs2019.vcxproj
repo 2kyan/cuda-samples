@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{23C321AC-75F5-47A4-8746-A2A67A76343A}</ProjectGuid>
     <RootNamespace>cuSolverRf_vs2019</RootNamespace>
     <ProjectName>cuSolverRf</ProjectName>
     <CudaToolkitCustomDir />

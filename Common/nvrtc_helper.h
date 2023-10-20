@@ -73,7 +73,7 @@ void compileFileToCUBIN(char *filename, int argc, char **argv, char **cubinResul
 
   int numCompileOptions = 0;
 
-  char *compileParams[2];
+  char *compileParams[5];
 
   int major = 0, minor = 0;
   char deviceName[256];
@@ -145,6 +145,10 @@ void compileFileToCUBIN(char *filename, int argc, char **argv, char **cubinResul
     numCompileOptions++;
   }
 
+  int additional_num_opt = 0;
+  compileParams[numCompileOptions++] = "-lineinfo";
+  additional_num_opt += 1;
+
   // compile
   nvrtcProgram prog;
   NVRTC_SAFE_CALL("nvrtcCreateProgram",
@@ -177,7 +181,7 @@ void compileFileToCUBIN(char *filename, int argc, char **argv, char **cubinResul
   *cubinResult = code;
   *cubinResultSize = codeSize;
 
-  for (int i = 0; i < numCompileOptions; i++) {
+  for (int i = 0; i < numCompileOptions-additional_num_opt; i++) {
     free(compileParams[i]);
   }
 }

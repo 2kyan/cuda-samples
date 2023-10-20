@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{5F9632D6-9493-45AF-B21A-433C94F305E6}</ProjectGuid>
     <RootNamespace>simpleMPI_vs2019</RootNamespace>
     <ProjectName>simpleMPI</ProjectName>
     <CudaToolkitCustomDir />

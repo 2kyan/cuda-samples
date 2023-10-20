@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{4FE82911-0E3E-49EA-99AB-94F7D0704B71}</ProjectGuid>
     <RootNamespace>MC_SingleAsianOptionP_vs2019</RootNamespace>
     <ProjectName>MC_SingleAsianOptionP</ProjectName>
     <CudaToolkitCustomDir />

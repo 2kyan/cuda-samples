@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{2617549C-C1D4-43AA-9A4D-D443337A8B26}</ProjectGuid>
     <RootNamespace>SobolQRNG_vs2019</RootNamespace>
     <ProjectName>SobolQRNG</ProjectName>
     <CudaToolkitCustomDir />

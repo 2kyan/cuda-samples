@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{6FD14E4D-FE84-4642-B5FA-3AF91C57C4DB}</ProjectGuid>
     <RootNamespace>simpleCallback_vs2019</RootNamespace>
     <ProjectName>simpleCallback</ProjectName>
     <CudaToolkitCustomDir />

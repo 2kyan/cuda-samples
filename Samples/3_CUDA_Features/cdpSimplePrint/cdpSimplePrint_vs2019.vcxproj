@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{78929EB8-DD9D-483F-9813-960482218021}</ProjectGuid>
     <RootNamespace>cdpSimplePrint_vs2019</RootNamespace>
     <ProjectName>cdpSimplePrint</ProjectName>
     <CudaToolkitCustomDir />
@@ -100,7 +100,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="cdpSimplePrint.cu" />
-
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

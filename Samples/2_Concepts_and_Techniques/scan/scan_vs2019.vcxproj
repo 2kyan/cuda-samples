@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{8D60AD4C-9BD0-44DA-B240-1C6FC7B9F2D0}</ProjectGuid>
     <RootNamespace>scan_vs2019</RootNamespace>
     <ProjectName>scan</ProjectName>
     <CudaToolkitCustomDir />

@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{A3A96FA5-8FF1-4A19-B2CF-2477665BBE86}</ProjectGuid>
     <RootNamespace>c++11_cuda_vs2019</RootNamespace>
     <ProjectName>c++11_cuda</ProjectName>
     <CudaToolkitCustomDir />
