@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3A7DB057-9967-4893-82CB-FDC0EB353D5A}</ProjectGuid>
+    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
     <RootNamespace>inlinePTX_nvrtc_vs2019</RootNamespace>
     <ProjectName>inlinePTX_nvrtc</ProjectName>
     <CudaToolkitCustomDir />
@@ -34,7 +34,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(CUDAPropsPath)\CUDA 12.2.props" />
+    <Import Project="$(CUDAPropsPath)\CUDA 12.3.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
@@ -63,8 +63,7 @@
       <OutputFile>$(OutDir)/inlinePTX_nvrtc.exe</OutputFile>
     </Link>
     <CudaCompile>
-      <CodeGeneration>
-      </CodeGeneration>
+      <CodeGeneration></CodeGeneration>
       <AdditionalOptions>-Xcompiler "/wd 4819"  --threads 0 </AdditionalOptions>
       <Include>./;../../../Common</Include>
       <Defines>WIN32</Defines>
@@ -104,6 +103,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(CUDAPropsPath)\CUDA 12.2.targets" />
+    <Import Project="$(CUDAPropsPath)\CUDA 12.3.targets" />
   </ImportGroup>
 </Project>

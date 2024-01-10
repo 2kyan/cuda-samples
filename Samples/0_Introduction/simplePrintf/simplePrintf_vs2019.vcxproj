@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2F9C64A9-A9C7-4221-9B85-CDE02BED9A5A}</ProjectGuid>
+    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
     <RootNamespace>simplePrintf_vs2019</RootNamespace>
     <ProjectName>simplePrintf</ProjectName>
     <CudaToolkitCustomDir />
@@ -34,7 +34,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(CUDAPropsPath)\CUDA 12.2.props" />
+    <Import Project="$(CUDAPropsPath)\CUDA 12.3.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
@@ -99,9 +99,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="simplePrintf.cu" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(CUDAPropsPath)\CUDA 12.2.targets" />
+    <Import Project="$(CUDAPropsPath)\CUDA 12.3.targets" />
   </ImportGroup>
 </Project>
