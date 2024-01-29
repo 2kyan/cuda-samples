@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{0D6E96CE-CAA7-4343-A627-1C52F2E9DD66}</ProjectGuid>
     <RootNamespace>simpleMultiGPU_vs2019</RootNamespace>
     <ProjectName>simpleMultiGPU</ProjectName>
     <CudaToolkitCustomDir />

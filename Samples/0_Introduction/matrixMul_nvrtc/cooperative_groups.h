@@ -361,16 +361,24 @@ private:
         return details::grid::size();
     }
 
-    _CG_STATIC_QUALIFIER unsigned long long thread_rank() {
-        return details::grid::thread_rank();
-    }
-
     _CG_STATIC_QUALIFIER dim3 group_dim() {
         return details::grid::grid_dim();
     }
 
+    _CG_STATIC_QUALIFIER dim3 dim_threads() {
+        return details::grid::dim_threads();
+    }
+
     _CG_STATIC_QUALIFIER unsigned long long num_threads() {
         return details::grid::num_threads();
+    }
+
+    _CG_STATIC_QUALIFIER dim3 thread_index() {
+        return details::grid::thread_index();
+    }
+
+    _CG_STATIC_QUALIFIER unsigned long long thread_rank() {
+        return details::grid::thread_rank();
     }
 
     _CG_STATIC_QUALIFIER dim3 dim_blocks() {
@@ -491,6 +499,11 @@ class cluster_group : public thread_group_base<details::cluster_group_id>
     _CG_STATIC_QUALIFIER unsigned int block_rank()
     {
         return details::cluster::block_rank();
+    }
+
+    _CG_STATIC_QUALIFIER dim3 thread_index()
+    {
+        return details::cluster::thread_index();
     }
 
     _CG_STATIC_QUALIFIER unsigned int thread_rank()
@@ -1158,7 +1171,7 @@ class __single_warp_thread_block_tile<Size, void> :
     typedef __static_size_thread_block_tile_base<numThreads> staticSizeBaseT;
 
 protected:
-    _CG_QUALIFIER __single_warp_thread_block_tile(unsigned int meta_group_rank, unsigned int meta_group_size) {
+    _CG_QUALIFIER __single_warp_thread_block_tile(unsigned int meta_group_rank = 0, unsigned int meta_group_size = 1) {
         _data.coalesced.mask = staticSizeBaseT::build_mask();
         _data.coalesced.size = numThreads;
         _data.coalesced.metaGroupRank = meta_group_rank;

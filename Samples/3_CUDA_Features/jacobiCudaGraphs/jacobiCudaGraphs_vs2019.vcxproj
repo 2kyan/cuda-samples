@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{BAD6C4A9-636B-45C3-9231-3227FCA186EB}</ProjectGuid>
     <RootNamespace>jacobiCudaGraphs_vs2019</RootNamespace>
     <ProjectName>jacobiCudaGraphs</ProjectName>
     <CudaToolkitCustomDir />

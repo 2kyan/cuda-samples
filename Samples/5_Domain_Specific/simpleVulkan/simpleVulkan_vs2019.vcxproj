@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{3F6B642F-BFAB-4128-B4A6-864611E76EDC}</ProjectGuid>
     <RootNamespace>simpleVulkan_vs2019</RootNamespace>
     <ProjectName>simpleVulkan</ProjectName>
     <CudaToolkitCustomDir />
@@ -99,12 +99,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
     <Link>
-      
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
-      
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

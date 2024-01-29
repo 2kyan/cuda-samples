@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{5B7C6630-C8E8-43CD-8349-4948D15A8F0E}</ProjectGuid>
     <RootNamespace>eigenvalues_vs2019</RootNamespace>
     <ProjectName>eigenvalues</ProjectName>
     <CudaToolkitCustomDir />

@@ -397,5 +397,15 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Linux Objects
+*.o
+*.out
+*.swp
+
 # Cuda
 *.fatbin
+*.cubin
+*.cuasm
+*.dsass
+hnvcc_keep_dir/
+

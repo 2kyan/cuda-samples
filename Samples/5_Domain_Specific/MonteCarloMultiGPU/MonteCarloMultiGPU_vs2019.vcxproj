@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{D815DBAD-BCE8-40F2-A23D-EB401A7F69B5}</ProjectGuid>
     <RootNamespace>MonteCarloMultiGPU_vs2019</RootNamespace>
     <ProjectName>MonteCarloMultiGPU</ProjectName>
     <CudaToolkitCustomDir />

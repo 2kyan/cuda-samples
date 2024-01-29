@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{33AFA4B7-45E0-4F95-BF2E-9262F9CE6CE7}</ProjectGuid>
     <RootNamespace>histogram_vs2019</RootNamespace>
     <ProjectName>histogram</ProjectName>
     <CudaToolkitCustomDir />

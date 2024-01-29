@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{5E5280C8-3969-4ED5-897F-F858DF11EA23}</ProjectGuid>
     <RootNamespace>VFlockingD3D10_vs2019</RootNamespace>
     <ProjectName>VFlockingD3D10</ProjectName>
     <CudaToolkitCustomDir />

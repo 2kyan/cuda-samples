@@ -91,14 +91,6 @@
 // MMA matrix tile dimensions.
 
 #define M 16
-#include <assert.h>
-#include <cuda.h>
-#include <mma.h>
-#include <stdio.h>
-
-// helper functions and utilities to work with CUDA
-#include <helper_cuda.h>
-#include <helper_functions.h>
 #define N 16
 #define K 16
 
@@ -468,7 +460,7 @@ __global__ void simple_wmma_gemm(half *a, half *b, float *c, float *d, int m_ld,
                             wmma::mem_row_major);
   }
 }
-
+/*
 __global__ void simple_wmma_gemm_i8(signed char *a, signed char *b, int *c, int *d, int m_ld,
                                  int n_ld, int k_ld, float alpha, float beta) {
   // Leading dimensions. Packed with no transpositions.
@@ -526,6 +518,7 @@ __global__ void simple_wmma_gemm_i8(signed char *a, signed char *b, int *c, int 
                             wmma::mem_row_major);
   }
 }
+*/
 
 __host__ void matMultiplyOnHost(half *A, half *B, float *C, float alpha,
                                 float beta, int numARows, int numAColumns,

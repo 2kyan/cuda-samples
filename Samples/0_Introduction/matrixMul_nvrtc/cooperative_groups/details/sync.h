@@ -66,43 +66,6 @@ _CG_STATIC_QUALIFIER bool is_cta_master() {
     return (threadIdx.x + threadIdx.y + threadIdx.z == 0);
 }
 
-_CG_STATIC_QUALIFIER void sync_grids(volatile barrier_t *arrived) {
-    unsigned int oldArrive = 0;
-
-    __barrier_sync(0);
-
-    if (is_cta_master()) {
-        unsigned int expected = gridDim.x * gridDim.y * gridDim.z;
-        bool gpu_master = (blockIdx.x + blockIdx.y + blockIdx.z == 0);
-        unsigned int nb = 1;
-
-        if (gpu_master) {
-            nb = 0x80000000 - (expected - 1);
-        }
-
-#if __CUDA_ARCH__ < 700
-        // Fence; barrier update; volatile polling; fence
-        __threadfence();
-
-        oldArrive = atomicAdd((unsigned int*)arrived, nb);
-
-        while (!bar_has_flipped(oldArrive, *arrived));
-
-        __threadfence();
-#else
-        // Barrier update with release; polling with acquire
-        asm volatile("atom.add.release.gpu.u32 %0,[%1],%2;" : "=r"(oldArrive) : _CG_ASM_PTR_CONSTRAINT((unsigned int*)arrived), "r"(nb) : "memory");
-
-        unsigned int current_arrive;
-        do {
-            asm volatile("ld.acquire.gpu.u32 %0,[%1];" : "=r"(current_arrive) : _CG_ASM_PTR_CONSTRAINT((unsigned int *)arrived) : "memory");
-        } while (!bar_has_flipped(oldArrive, current_arrive));
-#endif
-    }
-
-    __barrier_sync(0);
-}
-
 _CG_STATIC_QUALIFIER unsigned int sync_grids_arrive(volatile barrier_t *arrived) {
     unsigned int oldArrive = 0;
 

@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{F821D46D-3F7E-4F02-9D3C-AC179EC8F36F}</ProjectGuid>
     <RootNamespace>simpleAtomicIntrinsics_vs2019</RootNamespace>
     <ProjectName>simpleAtomicIntrinsics</ProjectName>
     <CudaToolkitCustomDir />

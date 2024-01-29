@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{997E0757-EA74-4A4E-A0FC-47D8C8831A15}</ProjectGuid>
+    <ProjectGuid>{E40D1D07-E298-4E81-B9C6-98C6AE9B9CDB}</ProjectGuid>
     <RootNamespace>cuSolverSp_LowlevelCholesky_vs2019</RootNamespace>
     <ProjectName>cuSolverSp_LowlevelCholesky</ProjectName>
     <CudaToolkitCustomDir />
