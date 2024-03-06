@@ -39,48 +39,112 @@
 using namespace std;
 using namespace std::chrono;
 
-#define TEST_ITERATIONS     (1000)
-#define TOTAL_PARAMS        (8000)  // ints
-#define KERNEL_PARAM_LIMIT  (1024)  // ints
-#define CONST_COPIED_PARAMS (TOTAL_PARAMS - KERNEL_PARAM_LIMIT)
+//#define TEST_ITERATIONS     (1000)
+//#define TOTAL_PARAMS        (8188)  // ints
+//#define KERNEL_PARAM_LIMIT  (8188)  // ints
+//#define CONSTANT_PARAM_LIMIT (16384)  // ints
+//#define CONST_COPIED_PARAMS (CONSTANT_PARAM_LIMIT - 0)
+
+#define TEST_ITERATIONS     (1)
+#define TOTAL_PARAMS        (8180)  // ints
+#define KERNEL_PARAM_LIMIT  (8180)  // ints //5460
+#define CONSTANT_PARAM_LIMIT (16384)  // ints //4680
+#define CONST_COPIED_PARAMS (CONSTANT_PARAM_LIMIT)
+#define STRIDE (4)
+#define NUMWAVES (1)
+#define WARPSIZE (32)
+
+typedef int IDT;
 
 __constant__ int excess_params[CONST_COPIED_PARAMS];
 
+#define SM_SIZE 0x1
+__shared__ int sharedData[SM_SIZE];
+
 typedef struct {
-  int param[KERNEL_PARAM_LIMIT];
+  IDT param[KERNEL_PARAM_LIMIT];
 } param_t;
 
 typedef struct {
-  int param[TOTAL_PARAMS];
+  IDT param[TOTAL_PARAMS];
 } param_large_t;
 
 // Kernel with 4KB kernel parameter limit
 __global__ void kernelDefault(__grid_constant__ const param_t p, int *result) {
-  int tmp = 0;
+  int tid = (threadIdx.x & 0x1F);
+  int wid = (threadIdx.x >> 5);
+  IDT tmp = 0;
+  volatile int start_time, end_time;
 
-  // accumulate kernel parameters
-  for (int i = 0; i < KERNEL_PARAM_LIMIT; ++i) {
-    tmp += p.param[i];
+  if ( tid & 0xF == 0) {
+    //printf("%d\n", wid);
+    sharedData[0] = clock();
+    start_time = clock();
+    // accumulate kernel parameters
+  #pragma unroll
+    for (int i = 0; i < KERNEL_PARAM_LIMIT; i+=WARPSIZE) {
+      tmp += p.param[i+tid];
+      tmp += sharedData[i & (SM_SIZE-1)];
+    }
+    // accumulate excess values passed via const memory
+  #pragma unroll
+    for (int i = 0; i < CONST_COPIED_PARAMS; i+=WARPSIZE) {
+      tmp += excess_params[i+tid];
+      tmp += sharedData[i & (SM_SIZE-1)];
+    }
+
+    end_time = clock();
+
   }
-
-  // accumulate excess values passed via const memory
-  for (int i = 0; i < CONST_COPIED_PARAMS; ++i) {
-    tmp += excess_params[i];
+  if (tid == 0) {
+    result[wid*STRIDE] = tmp;
+    result[wid*STRIDE + 1] = start_time;
+    result[wid*STRIDE + 2] = end_time;
   }
-
-  *result = tmp;
 }
 
 // Kernel with 32,764 byte kernel parameter limit
 __global__ void kernelLargeParam(__grid_constant__ const param_large_t p, int *result) {
-  int tmp = 0;
+  int tid = (threadIdx.x & 0x1F);
+  int wid = (threadIdx.x >> 5);
+  IDT tmp = 0;
 
-  // accumulate kernel parameters
-  for (int i = 0; i < TOTAL_PARAMS; ++i) {
-    tmp += p.param[i];
+  volatile int start_time, end_time;
+  if ( tid < 8) {
+    sharedData[0] = clock();
+    // accumulate kernel parameters
+    if (wid == 0) {
+      //printf("%d\n", wid);
+      start_time = clock();
+#pragma unroll
+      //for (int i = 0; i < TOTAL_PARAMS; i += WARPSIZE) {
+      for (int i = 0; i < 128; i += WARPSIZE) {
+        tmp += p.param[i + tid];
+        tmp += sharedData[i & (SM_SIZE - 1)];
+      }
+
+      end_time = clock();
+      /*
+    } else {
+      //printf("%d\n", wid);
+      start_time = clock();
+#pragma unroll
+      for (int i = 0; i < TOTAL_PARAMS; i += WARPSIZE) {
+        tmp += p.param[i+1+tid];
+        tmp += sharedData[i & (SM_SIZE-1)];
+      }
+      end_time = clock();
+    }
+    */
+    }
+      int t = clock();
+  if (tid == 0) {
+    result[wid * STRIDE] = tmp + t;
+    result[wid*STRIDE + 1] = start_time;
+    result[wid*STRIDE + 2] = end_time;
+  }
   }
 
-  *result = tmp;
 }
 
 static void report_time(std::chrono::time_point<std::chrono::steady_clock> start,
@@ -99,13 +163,16 @@ int main() {
   param_large_t p_large;
 
   // pageable host memory that holds excess constants passed via constant memory
-  int *copied_params = (int *)malloc(CONST_COPIED_PARAMS * sizeof(int));
+  int *copied_params = (int *)malloc(CONST_COPIED_PARAMS * sizeof(IDT));
   assert(copied_params);
 
   // storage for computed result
+  constexpr int WAVESIZE = NUMWAVES*WARPSIZE;
+  constexpr int NOUT = NUMWAVES * STRIDE;
+
   int *d_result;
-  int h_result;
-  checkCudaErrors(cudaMalloc(&d_result, sizeof(int)));
+  int h_result[NOUT];
+  checkCudaErrors(cudaMalloc(&d_result, NOUT*sizeof(int)));
 
   int expected_result = 0;
 
@@ -121,31 +188,44 @@ int main() {
     expected_result += (i & 0xFF);
   }
 
-  // warmup, verify correctness
-  checkCudaErrors(cudaMemcpyToSymbol(excess_params, copied_params, CONST_COPIED_PARAMS * sizeof(int), 0, cudaMemcpyHostToDevice));
-  kernelDefault<<<1,1>>>(p, d_result);
-  checkCudaErrors(cudaMemcpy(&h_result, d_result, sizeof(int), cudaMemcpyDeviceToHost));
+  kernelLargeParam<<<1,WAVESIZE>>>(p_large, d_result);
+  checkCudaErrors(cudaMemcpy(&h_result, d_result, NOUT*sizeof(int), cudaMemcpyDeviceToHost));
   checkCudaErrors(cudaDeviceSynchronize());
-  if(h_result != expected_result) {
+
+  for (int i = 0; i < NUMWAVES; ++i) {
+    int offset = i * STRIDE;
+    printf("W:[%d] Large Executed Cycles: [%d - %d], [%d]\n", i, h_result[offset + 1], h_result[offset + 2], h_result[offset + 2] - h_result[offset + 1]);
+  }
+
+  if(h_result[0] != expected_result) {
     std::cout << "Test failed" << std::endl;
 	 rc=-1;
 	 goto Exit;    
   }
 
-  kernelLargeParam<<<1,1>>>(p_large, d_result);
-  checkCudaErrors(cudaMemcpy(&h_result, d_result, sizeof(int), cudaMemcpyDeviceToHost));
+  // warmup, verify correctness
+  checkCudaErrors(cudaMemcpyToSymbol(excess_params, copied_params, CONST_COPIED_PARAMS * sizeof(IDT), 0, cudaMemcpyHostToDevice));
+  kernelDefault<<<1,WAVESIZE>>>(p, d_result);
+  checkCudaErrors(cudaMemcpy(&h_result, d_result, NOUT*sizeof(int), cudaMemcpyDeviceToHost));
   checkCudaErrors(cudaDeviceSynchronize());
-  if(h_result != expected_result) {
+
+  for (int i = 0; i < NUMWAVES; ++i) {
+    int offset = i * STRIDE;
+    printf("W:[%d] Large Executed Cycles: [%d - %d], [%d]\n", i, h_result[offset + 1], h_result[offset + 2], h_result[offset + 2] - h_result[offset + 1]);
+  }
+
+  if(h_result[0] != expected_result) {
     std::cout << "Test failed" << std::endl;
 	 rc=-1;
 	 goto Exit;    
   }
+
 
   // benchmark default kernel parameter limit
   {
     auto start = steady_clock::now();
     for (int i = 0; i < TEST_ITERATIONS; ++i) {
-      checkCudaErrors(cudaMemcpyToSymbol(excess_params, copied_params, CONST_COPIED_PARAMS * sizeof(int), 0, cudaMemcpyHostToDevice));
+      checkCudaErrors(cudaMemcpyToSymbol(excess_params, copied_params, CONST_COPIED_PARAMS * sizeof(IDT), 0, cudaMemcpyHostToDevice));
       kernelDefault<<<1, 1>>>(p, d_result);
     }
     checkCudaErrors(cudaDeviceSynchronize());
